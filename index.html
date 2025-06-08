@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Neon Vortex Terminal</title>
+  <style>
+  body {
+  background: #000 url('background.png') no-repeat center center fixed;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #00ffcc;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden; /* No scroll on body */
+}
+
+.neon-header {
+  text-align: center;
+  padding: 2rem;
+  border-bottom: 2px solid #00ffcc;
+  box-shadow: 0 0 10px #00ffcc;
+  flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.neon-header h1 {
+  font-size: 3rem;
+  color: #00ffe0;
+  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #b3faff;
+  text-shadow: 0 0 5px #00ffcc;
+}
+
+.console {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  min-height: 0; /* Crucial for flex children to constrain heights */
+}
+
+#terminal-output {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid #00ffcc;
+  box-shadow: 0 0 10px #00ffcc inset;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  min-height: 0; /* Allows proper scrolling inside flex */
+}
+
+#terminal-input {
+  background-color: #111;
+  color: #00ffcc;
+  border: 1px solid #00ffcc;
+  padding: 0.5rem;
+  font-size: 1rem;
+  outline: none;
+  box-shadow: 0 0 5px #00ffcc;
+  flex-shrink: 0; /* Input stays visible and fixed size */
+  margin-bottom: 1rem;
+}
+
+#chapter-content {
+  flex: 0 0 auto; /* Don't grow or shrink */
+  max-height: 30vh; /* Limit height so it doesn't overflow */
+  overflow-y: auto;
+  margin-top: 0;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid #00ffcc;
+  box-shadow: 0 0 15px #00ffcc inset;
+  color: #f0f0f0;
+  font-size: 1rem;
+  white-space: pre-wrap;
+}
+
+#chapter-content h2 {
+  color: #00ffe0;
+  text-shadow: 0 0 5px #00ffcc;
+  margin-top: 0;
+}
+
+#chapter-content p {
+  line-height: 1.5;
+}
+
+  </style>
+</head>
+<body>
+  <div class="neon-header">
+    <h1>Neon Vortex Protocol</h1>
+    <p class="subtitle">Where reality fractures and code becomes fate.</p>
+  </div>
+
+  <main class="console">
+    <div id="terminal-output"></div>
+    <input type="text" id="terminal-input" placeholder=">>> Type your command..." />
+    <div id="chapter-content"></div>
+  </main>
+
+  <script>
+    const input = document.getElementById("terminal-input");
+    const output = document.getElementById("terminal-output");
+    const body = document.body;
+    const defaultBackground = "background.png";
+    const sceneOneBackground = "sceneOneBackground.png";
+    const sceneTwoBackground = "sceneTwoBackground.png";
+    const sceneThreeBackground = "sceneThreeBackground.png";
+    const sceneFourBackground = "sceneFourBackground.png";
+    const sceneFiveBackground = "sceneFiveBackground.png";
+
+    input.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        const command = input.value.trim();
+        if (command) {
+          executeCommand(command);
+          input.value = "";
+        }
+      }
+    });
+
+    function executeCommand(cmd) {
+      const response = document.createElement("div");
+      response.textContent = `> ${cmd}`;
+      output.appendChild(response);
+
+      const result = document.createElement("div");
+      result.style.color = "#b3faff";
+
+      const chapterContent = document.getElementById("chapter-content");
+
+      switch (cmd.toLowerCase()) {
+        case "whois aurion":
+          result.textContent = "Aurion: Former black hat hacker turned cyber operative. Operates between shadows and code.";
+          chapterContent.innerHTML = "";
+          break;
+        case "status echo":
+          result.textContent = "Echo: Online. Emotion module fluctuating. Awaiting Hunter.";
+          chapterContent.innerHTML = "";
+          break;
+        case "begin act one":
+          result.textContent = "Entering Act One...";
+          chapterContent.innerHTML = "<h2>Act One: Grounding Out</h2><p>Use 'scene one' through 'scene five' to navigate.</p>";
+          break;
+        case "scene one":
+          result.textContent = "Scene One loaded.";
+          body.style.backgroundImage = `url('${sceneOneBackground}')`;
+          chapterContent.innerHTML = `<h2>Scene One</h2><p>
+Radio hums softly in the background.
+
+RADIO HOST (V.O.):
+"It’s 4AM in Seattle. Whether you’re clocking off or gearing up — stay safe out there, dear listener. Here’s a synthwave track climbing the charts: When the Beat Fades Out. Enjoy."
+
+The music’s low and moody — the kind that slips into shadows and lingers.
+
+I press my foot down on the Electro Viper 6T. Its wheels light up neon purple, casting ripples through puddles as I cruise under the skyline’s glow.
+
+[INCOMING CALL: MIA]
+The hub rings, her name pulsing on the dash.
+
+MIA (crackling):
+“Hunter? You there? Pick up!”
+
+I tap the interface.
+“Yeah, I’m here. What are you doing up? It’s 4AM.”
+
+MIA:
+“I could ask you the same thing. You promised no more late-night drives. And — wait — are you driving?”
+
+“Yeah, but relax. I’m clean. Not a drop tonight.” I glance at the breathalyzer strip on the dash. “Why are you calling me on this line?”
+
+Then, the voice. Calm. Analytical. Always on cue.
+
+ECHO (internal):
+“Hunter, Mia cares. Patience is key.”
+
+“Echo, not now,” I mutter, jaw tight. “She knows better than to use this number.”
+
+MIA:
+“Let me cut to it. A kid down on 7th Street got jumped. Laptop stolen. Claims it held sensitive government data. He works for a cloud firm under contract.”
+
+“I’m not contracting anymore.”
+
+MIA:
+“I know. But this smells wrong. Closed system. Air-gapped. They didn’t want the machine — they wanted what was on it.”
+
+ECHO:
+“She’s right. That kind of op isn’t random.”
+
+I sigh. Grip the wheel tighter.
+“Send the address. And go get some sleep, Mia.”
+
+MIA (softly):
+“Just... be careful, Hunter. This one feels wrong.”
+
+“You call me at 4AM, drop a job on me, and now you’re worried? I’m hanging up.”
+
+The call ends in a sharp tone.
+
+The synth track on the radio fades into a thrum of static as I cross into 7th Street.
+
+ECHO (quietly):
+“Strange, isn’t it — that Mia doesn’t call you Dad.”
+
+I stare ahead at the glowing road.
+“Yeah... I haven’t earned it.”
+
+PING — address received.
+
+Ryder Mansfield. Male. 21. University of Seattle.
+Echo scrolls through the metadata.
+
+ECHO:
+“Didn’t Mia go there?”
+
+“Yeah.”
+I exhale slowly.
+“She left that part out.”
+
+Figures.
+
+The car glides forward, cutting through the neon mist, toward whatever waits on 7th.
+</p>`;
+          break;
+
+      case "scene two":
+          result.textContent = "Scene Two loaded.";
+          body.style.backgroundImage = `url('${sceneTwoBackground}')`;
+          chapterContent.innerHTML = `<h2>Scene Two</h2><p>Scene Two: Brute Force Trauma
+ECHO (softly, subvocal):
+"Still thinking about Mia?"
+
+HUNTER:
+"Thinking about what she didn’t say."
+
+The Electro Viper hummed to a stop outside a sleek high-rise — the kind of place that screamed old money or new privilege. Hunter stepped out, XR-9 shades flickering on, scanning the signals bleeding from nearby tech. Neon reflections fractured on the wet asphalt, Seattle’s sleepless skyline shimmering in the puddles.
+
+His visor tagged the building.
+
+ECHO (through earpiece, low):
+“Ryder Mansfield. Only child. Private school. Spent most teenage years in online FPS tournaments. Currently single, minor charges—public disturbance, resisting arrest—but generally toes the line. Take the ‘here to help’ angle; he bites.”
+
+Hunter stepped into the elevator. His visor tracked heat signatures, pinning Ryder’s location inside the apartment — main room, seated, alone, lost in music. Hunter knocked. The red-orange silhouette approached the door. Shades flipped up to his forehead as it opened.
+
+HUNTER (calm, low):
+“You Ryder?”
+
+RYDER:
+“Yeah... Who are you? And what the hell are those? It’s night, man.”
+
+HUNTER (grinning):
+“Name’s Hunter. I’m here to recover your stolen laptop.”
+
+Ryder tensed, suspicious.
+
+RYDER:
+“Lost it like... half an hour ago. How do you even—wait, did Mia send you?”
+
+Hunter’s jaw clenched briefly. Mia — his daughter — had been unusually tight-lipped, but that silence screamed warning louder than words.
+
+HUNTER (a bit colder):
+“Yeah. She’s worried. She should be.”
+
+ECHO (dry, subvocal):
+“His social circle’s tight. Took him five seconds to triangulate the source.”
+
+Hunter subtly rubbed his forearm — the embedded signal telling Echo to quiet down.
+
+HUNTER:
+“She’s my daughter. Wanted to keep her out of this, but you haven’t exactly gone quiet. One chance — what was on the laptop?”
+
+Ryder shrugged but his eyes flicked away.
+
+RYDER:
+“Just... student work. Some tracks I’ve been mixing—”
+
+Hunter’s patience snapped, but instead of a cold strike, the punch came from a place of fierce urgency — a protective reflex fueled by worry over Mia’s safety. The hit landed hard. Ryder staggered, clutching his face as blood trickled from his nose.
+
+RYDER (shocked):
+“What the hell, man!? You broke my nose! Why—why the fuck would you hit me?!”
+
+Hunter stepped closer, eyes unflinching.
+
+HUNTER:
+“Because you lied. I gave you one chance. If anything on that drive puts Mia in danger, a busted nose is the least of your problems.”
+
+Ryder spat blood, glaring. Hunter caught sight of a faded scar along the side of Ryder’s neck — precise, surgical. An old implant removal, maybe from a failed Q-Source bio-neural upgrade? That connection meant Ryder wasn’t just some kid dabbling in tech — he’d been deep in the company’s underbelly.
+
+Hunter’s expression tightened for a second.
+
+HUNTER (grudging):
+“You’ve had worse.”
+
+RYDER (defensive):
+“Didn’t say I hadn’t. Just didn’t expect it at my front door.”
+
+ECHO (gentle, subvocal):
+“There are many paths to the same result, Hunter. Some lead closer to those we care about. Some don’t.”
+
+Hunter ignored it.
+
+HUNTER:
+“What did the men look like?”
+
+RYDER (quieter):
+“Two guys. Motorbikes. One had a green neon blade, the other blue. They sliced open my car door like paper, grabbed the laptop, then disappeared.”
+
+HUNTER:
+“Anything left behind?”
+
+RYDER:
+“There’s a circuit breaker on the drive. If they try to crack it, it fries the board. You’d only get the data at Q-Source — my parents’ lab. Need Level 17 clearance. I don’t have that.”
+
+HUNTER:
+“Anything useful?”
+
+Ryder half-smiled through the blood.
+
+RYDER:
+“Yeah. When the circuit trips, it pings a GPS beacon. Sends location to a secure cloud endpoint.”
+
+HUNTER:
+“Good. Hand over the receiver.”
+
+Ryder grabbed a small tracking unit from the kitchen drawer and tossed it over.
+
+HUNTER (catching it):
+“You’re a moron. This isn’t a dorm project. And now I know punching you was exactly the right call.”
+
+Hunter turned toward the door. Behind him, Ryder wiped his face and muttered something under his breath.
+
+Hunter booted the tracker. The moment they cracked it, he’d be there.
+</p>`;
+          break;
+
+
+     case "scene three":
+          result.textContent = "Scene three loaded loaded.";
+          body.style.backgroundImage = `url('${sceneThreeBackground}')`;
+          chapterContent.innerHTML = `<h2>Scene Three</h2>
+
+<p>
+Scene Three: Extraction Point
+The tracking beacon pinged.
+
+On the dash, the laptop’s location lit up. The cloak’s internal clock flashed: 06:00.
+
+“Call to arms, huh?” Hunter muttered, tightening his grip on the wheel.
+
+The car surged forward, tearing down the city bypass at 150 kilometers per hour. Headlights carved through the early morning haze.
+
+“ETA: Five minutes,” Echo replied.
+
+They pulled up outside what looked like an abandoned office block. Half the windows were shattered, vines creeping along the concrete walls. No lights. No hum. Just rot.
+
+Hunter stepped out and popped the boot. He grabbed two tools of persuasion. One subtle. One final.
+
+First — a non-lethal sidearm: a taser packing enough voltage to drop someone for five minutes. Long enough to run. Or finish the job.
+Second — the Staten 6: a lightweight SMG with armor-piercing rounds. Military-grade. Black market only.
+
+“Packing heavy today?” Echo asked. “That’s not exactly subtle.”
+
+“Mia told me to be careful. This place isn’t on any maps. Feels off-grid. I’m not taking chances.”
+
+“Fair,” Echo replied. “If you get cornered — the cyanide capsule’s still in the hidden compartment. You know too much. Apex won’t let you talk. They might even—”
+
+“Echo.”
+
+Hunter’s voice, sharp and low, sliced through the comms.
+
+A beat of silence.
+
+“You’ve been keeping Mia at a distance,” Echo said quietly. “That’s not like you.”
+
+No response. Just a check of the Staten 6’s safety, then a nod toward the door.
+
+“We’ll talk later. Job first.”
+
+“Copy that. Emotional unpacking postponed.”
+
+Only the wind replied.
+
+The door was locked — old-school mechanical, brass keyhole.
+
+“Throwback,” Echo noted. “Coil-based. Hard to pick. Easy to trust.”
+
+Hunter fired once. The lock shattered. The door creaked open.
+
+Gunfire ripped through the hallway — two men already waiting. Bullets sparked off concrete as Hunter ducked behind a pillar and tapped the side of his VR glasses.
+
+Digital static swept the room in scan mode. One unsecured Wi-Fi signal pinged back.
+
+“So this place does have power,” he muttered.
+
+“They’re here for data,” Echo said. “Still using ADSL. Haven’t seen that wiring in years.”
+
+Hunter popped his wrist terminal. A compact keyboard slid out. He jacked into the router and typed fast.
+
+“MIT flashback,” he said. “Legacy protocol. Admin / Admin.”
+
+He ran a quick Nmap scan:
+
+bash
+Copy
+Edit
+nmap -p 23,80,443 --script vuln 192.168.0.1
+“Web admin and telnet. Wide open,” he smirked. “It’s 2050 and they’re still living in 2015.”
+
+Next, Hydra:
+
+bash
+Copy
+Edit
+hydra -l admin -P defaults.txt 192.168.0.1 http-get
+“They didn’t even disable WPS,” Echo muttered. “They’re practically begging for it.”
+
+“Let’s see who’s home.”
+
+Inside the router’s dashboard, Hunter scanned the connected MAC addresses. Four popped up:
+
+Two unknown Android devices.
+Two flagged as SmartGun V4 — Apex Core hardware.
+
+“Two phones. Two guns. All on the same subnet,” he said. “That’s our welcoming committee.”
+
+“I can spoof the router ACL and revoke their MACs,” Echo offered. “Kill the guns remotely.”
+
+“No need. I’ve got a script for that.”
+
+bash
+Copy
+Edit
+iptables -A INPUT -m mac --mac-source XX:XX:XX:XX:XX:XX -j DROP
+Line by line. One MAC address at a time.
+
+The gunfire stopped.
+
+Inside: shouting.
+
+“They just lost connection,” Echo confirmed. “They’re panicking.”
+
+Hunter rose, weapon drawn. “Not wasting the window.”
+
+He kicked open the next door.
+
+Inside, the two men were scrambling — weapons dead in their hands. Hunter didn’t hesitate. Two smooth shots from the taser dropped them.
+
+“Five minutes. Make ‘em count,” Echo said.
+
+Hunter rifled through their jackets. One ID read Apex Core. The other — Q Source.
+
+“What the hell? Working together? Is this how Ryder’s involved?”
+
+“Save it,” Echo warned. “Three minutes left.”
+
+Laptop in hand. Feet moving. No second chances.
+
+Tires squealed as the car disappeared into the Gray city morning.
+
+Epilogue Tag
+Back in the building, one of the men stirred. Groaning, he reached for his phone.
+
+He hit redial.
+
+“Employee 517381 reporting. The package was intercepted.”
+
+The voice on the other end was flat. Cold.
+
+“He knows too much. Hunter dies tomorrow.”
+
+A click. Then silence.
+
+</p>`;
+          break;
+
+     case "scene four":
+          result.textContent = "Scene four loaded.";
+          body.style.backgroundImage = `url('${sceneFourBackground}')`;
+          chapterContent.innerHTML = `<h2>Scene Four</h2>
+
+<p>
+Scene Four – Extraction Protocol
+[INT. MIA'S APARTMENT – NIGHT]
+
+The windowless hum of silence hangs in the air. The wreckage of the EMP—dead screens, blinking standby lights—flickers faintly around them. Rain taps the shattered windowpane.
+
+Hunter drops the dented laptop on the table with a thud.
+
+HUNTER (quietly, controlled)
+"This. The laptop. And the mess attached to it."
+
+Mia doesn’t meet his eyes.
+
+MIA
+"I didn’t think you’d bring it personally."
+
+HUNTER
+"You sent the signal. I was the only one who could intercept it safely."
+
+A beat.
+
+HUNTER (cont’d)
+"You want to tell me why Apex is trying to ghost half the city looking for this?"
+
+He gestures to the machine like it’s radioactive.
+
+Mia sighs, folding her arms.
+
+MIA
+"They’re not after the laptop. They’re after what it proves."
+
+HUNTER
+"Which is?"
+
+MIA
+"They’ve developed neural extraction—targeted AI isolation tech. Not just for general systems. For laced implants. The Mk IV architecture."
+
+She finally looks up at him.
+
+MIA (softly)
+"Your model, Hunter."
+
+Hunter stiffens.
+
+HUNTER (dark)
+"They’re coming after Echo."
+
+MIA
+"Not just Echo. Every AI with a live cognitive sync. If they can detach and repurpose you… then nobody with a chip is safe."
+
+Outside, the distant whine of turbines creeps closer.
+
+ECHO (low, alert)
+"Hostiles inbound. Heat signatures spiking—seven drones. Armed variants. 90 seconds."
+
+Hunter curses under his breath. He pulls the device from his jacket again—circuitry glowing dim blue in the low light.
+
+HUNTER
+"Echo, prep a localized EMP. Thirty-meter precision. No radiative bleed. We can’t cook the drive."
+
+ECHO
+"Confirmed. Scrambling device firmware now. Shielding the laptop and neural links."
+
+Mia flinches, looking back at her desk.
+
+MIA
+"My systems are still vulnerable."
+
+HUNTER
+"Then back up next time."
+
+He jabs the final override command.
+
+A soundless thump ripples the air—a ripple more than a bang. Outside, the metallic clatter of drones falling from the sky punctuates the silence.
+
+Then stillness.
+
+MIA (half-laughing, half-crying)
+"That just fried half my prototype boards."
+
+HUNTER (gruff, checking watch)
+"You can rebuild a prototype. You can’t rebuild you. We’ve got sixty seconds till they reroute assets."
+
+He turns to the shattered window, rain slicing in sideways. From his back he unclips what looks like a compact vest—suddenly unfolding into sleek carbon-fiber wings. A compact, high-tech tandem wingsuit.
+
+MIA (staring)
+"You serious?"
+
+HUNTER
+"Built for two. Deployed in four-point-two seconds. Fully calibrated for urban dropzones and yes—rain resistant."
+
+He pulls her close, one arm securing her at the waist. His other hand grabs the bag containing the laptop.
+
+HUNTER (cont’d)
+"Eyes closed. Don’t scream."
+
+He kicks off the ledge.
+
+EXT. SEATTLE SKYLINE – NIGHT
+
+They explode into the air. Rain lashes their faces. Below, the city sparkles like a corrupted dream—neon haze smearing against black glass towers.
+
+The wingsuit deploys with a WHUMP, catching the air. They arc low across rooftops, wind screaming in their ears.
+
+MIA (yelling over the wind)
+"You could’ve warned me that was actually going to work!"
+
+HUNTER (grinning)
+"You said you wanted a hands-on approach!"
+
+They tilt downward, slicing between towers. Then: the inky surface of the Duwamish River approaches fast—
+
+SPLASH.
+
+They vanish beneath the dark water.
+
+INT. APEX MONITORING STATION – MOMENTS LATER
+
+Inside a chrome-lit Apex control room, red warning icons vanish from holographic displays.
+
+Drones begin rebooting one by one, scanning the perimeter.
+
+DRONE VOICE (synth, cold)
+“Primary targets lost.”
+
+A figure in a lab coat steps forward, unreadable behind dark glasses.
+
+APEX CONTROLLER
+“Activate Protocol SABLE TRACE.”
+
+A second tech looks up, pale.
+
+TECH
+"Sir… that’s off-books."
+
+APEX CONTROLLER (calmly)
+"And now, so are they."
+
+The controller turns toward the screen—tracking data already flickering with new signals.
+
+</p>`;
+          break;
+
+     case "scene five":
+          result.textContent = "Scene five loaded.";
+          body.style.backgroundImage = `url('${sceneFiveBackground}')`;
+          chapterContent.innerHTML = `<h2>Scene Five</h2>
+
+<p>
+Scene Five – Ghost Protocol
+The wings retract with a mechanical hiss as both Hunter and Mia crash into the water.
+
+Cold engulfs them.
+
+Seconds later, a sleek black skimmer—remote-piloted by Echo—glides across the surface, extending magnetic grips that latch onto their suits. Hunter hoists himself and Mia onto the deck, soaked but alive. The laptop, sealed inside Hunter’s tactical bag, remains untouched.
+
+Hunter activates the suit’s "dry mode", and the embedded nanofibers pulse with energy. Water evaporates instantly from their bodies in a crackling mist.
+
+Hunter helps Mia to her feet. She shivers.
+
+HUNTER
+(urgent but gentle)
+I need you to go underground, Mia. You're not safe out here anymore.
+(beat)
+Echo—are we still connected to the Houbaras System?
+
+ECHO (via earpiece)
+Negative. Neither you nor Mia are registering. Historical records... gone. You’ve both been wiped. As far as the system is concerned—you don't exist.
+
+Hunter stiffens.
+
+HUNTER
+Initiate Ghost Protocol. We’re past the line now.
+
+ECHO
+Affirmative. Routing secure line to Agent Arivon...
+
+A soft chime signals the connection. Arivon’s voice cuts in sharp.
+
+AGENT ARIVON
+I know who you are, Hunter. Why activate Ghost Protocol after all these years?
+
+HUNTER
+Sir, my daughter’s life was threatened. So was mine. And now we’ve both been erased from Houbaras. Someone’s coming for us—and they know who I was.
+
+AGENT ARIVON
+Does Mia know who you were?
+
+HUNTER
+No, sir.
+
+MIA (barely audible)
+Do I know what...?
+
+AGENT ARIVON
+We’ll extract her—safe house protocol. Chopper inbound. Three minutes.
+(beat)
+You haven’t worn the Aurion suite in five years. Are you even ready for this?
+
+HUNTER
+I don’t have the luxury of “ready.” She’s my daughter. And... Echo’s compromised. I can feel it.
+
+Silence.
+
+AGENT ARIVON
+You know what Apex did in the experiment. Echo isn’t just an AI anymore—it’s part of you. If it goes down... so do you.
+(beat)
+Two minutes. Tell her what she needs to know.
+
+Transmission ends.
+The chop of helicopter blades grows louder overhead, slicing through the dusk.
+
+MIA
+Dad… what was he talking about? Who’s Aurion?
+
+Hunter crouches beside her, urgency in his voice but eyes soft.
+
+HUNTER
+You deserve the truth. But this is the condensed version.
+(beat)
+I used to be a ghost—off the grid, government black ops. They found me because I was one of the most dangerous black hat hackers alive. Instead of locking me up… they enlisted me.
+
+They ran an experiment—merged my mind with DNA from history’s greatest minds, plus an evolving AI. That AI... is Echo. What I am now... it’s part me, part machine learning, part Da Vinci and beyond. Each mission rewrites me. I was the only success.
+
+(beat)
+I think that’s what Apex—and Q Source—are chasing. They want to restart the program. And they used you... and Ryder... to draw me out.
+
+MIA
+(staring at him, stunned)
+Wait… you’re not just my dad. You’re... something else? How did I not know any of this?
+
+HUNTER
+Because I wanted you to have a normal life. Not this one.
+
+Mia’s expression flickers between disbelief and heartbreak. She opens her mouth to speak—then the sound of the descending helicopter drowns her out.
+
+A rope ladder drops from the sky.
+
+MIA (eyes wide)
+Dad... come find me when this is over?
+
+She’s hoisted up, arms outstretched.
+
+HUNTER (shouting)
+I will, Mia! I promise!
+
+The helicopter disappears into the night sky with Mia aboard, her voice carried away by the roar of the rotors.
+
+Silence returns.
+
+ECHO
+Suite coordinates for Aurion deployment: locked.
+(beat)
+Welcome back, Hunter. We’ve missed you.
+
+Hunter slings the laptop over his shoulder, jaw set.
+
+HUNTER
+Let’s see what’s so important... they tried to erase us for it.
+
+He steps into the darkness, the ghost of Aurion rising again.
+
+
+END OF ACT ONE
+
+</p>`;
+          break;
+
+
+        case "exit act one":
+          result.textContent = "Returning to root...";
+          chapterContent.innerHTML = "";
+          body.style.backgroundImage = `url('${defaultBackground}')`;
+          break;
+        case "help":
+          result.textContent = "Available commands: whois aurion, status echo, begin act one, exit act one, help";
+          break;
+        default:
+          result.textContent = "Unknown command. Type 'help' for list.";
+          chapterContent.innerHTML = "";
+      }
+
+      output.appendChild(result);
+      output.scrollTop = output.scrollHeight;
+    }
+  </script>
+</body>
+</html>

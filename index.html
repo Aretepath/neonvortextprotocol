@@ -1,165 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Neon Vortex Terminal</title>
-  <style>
-  body {
-  background: #000 url('background.png') no-repeat center center fixed;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  color: #00ffcc;
-  font-family: 'Courier New', Courier, monospace;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden; /* No scroll on body */
-}
-
-.neon-header {
-  text-align: center;
-  padding: 2rem;
-  border-bottom: 2px solid #00ffcc;
-  box-shadow: 0 0 10px #00ffcc;
-  flex-shrink: 0; /* Prevent header from shrinking */
-}
-
-.neon-header h1 {
-  font-size: 3rem;
-  color: #00ffe0;
-  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
-}
-
-.subtitle {
-  font-size: 1.2rem;
-  color: #b3faff;
-  text-shadow: 0 0 5px #00ffcc;
-}
-
-.console {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-  min-height: 0; /* Crucial for flex children to constrain heights */
-}
-
-#terminal-output {
-  flex: 1 1 auto;
-  overflow-y: auto;
-  padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.3);
-  border: 1px solid #00ffcc;
-  box-shadow: 0 0 10px #00ffcc inset;
-  margin-bottom: 1rem;
-  font-size: 1rem;
-  min-height: 0; /* Allows proper scrolling inside flex */
-}
-
-#terminal-input {
-  background-color: #111;
-  color: #00ffcc;
-  border: 1px solid #00ffcc;
-  padding: 0.5rem;
-  font-size: 1rem;
-  outline: none;
-  box-shadow: 0 0 5px #00ffcc;
-  flex-shrink: 0; /* Input stays visible and fixed size */
-  margin-bottom: 1rem;
-}
-
-#chapter-content {
-  flex: 0 0 auto; /* Don't grow or shrink */
-  max-height: 30vh; /* Limit height so it doesn't overflow */
-  overflow-y: auto;
-  margin-top: 0;
-  padding: 1rem;
-  background: rgba(0, 0, 0, 0.6);
-  border: 2px solid #00ffcc;
-  box-shadow: 0 0 15px #00ffcc inset;
-  color: #f0f0f0;
-  font-size: 1rem;
-  white-space: pre-wrap;
-}
-
-#chapter-content h2 {
-  color: #00ffe0;
-  text-shadow: 0 0 5px #00ffcc;
-  margin-top: 0;
-}
-
-#chapter-content p {
-  line-height: 1.5;
-}
-
-  </style>
-</head>
-<body>
-  <div class="neon-header">
-    <h1>Neon Vortex Protocol</h1>
-    <p class="subtitle">Where reality fractures and code becomes fate.</p>
-  </div>
-
-  <main class="console">
-    <div id="terminal-output"></div>
-    <input type="text" id="terminal-input" placeholder=">>> Type your command..." />
-    <div id="chapter-content"></div>
-  </main>
-
-  <script>
-    const input = document.getElementById("terminal-input");
-    const output = document.getElementById("terminal-output");
-    const body = document.body;
-    const defaultBackground = "background.png";
-    const sceneOneBackground = "sceneOneBackground.png";
-    const sceneTwoBackground = "sceneTwoBackground.png";
-    const sceneThreeBackground = "sceneThreeBackground.png";
-    const sceneFourBackground = "sceneFourBackground.png";
-    const sceneFiveBackground = "sceneFiveBackground.png";
-
-    input.addEventListener("keydown", function (event) {
-      if (event.key === "Enter") {
-        const command = input.value.trim();
-        if (command) {
-          executeCommand(command);
-          input.value = "";
-        }
+  <title>Neon Vortex Protocol</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neon Vortex Terminal</title>
+    <style>
+      body {
+        background: #000 url("background.png") no-repeat center center fixed;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: #00ffcc;
+        font-family: "Courier New", Courier, monospace;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden; /* No scroll on body */
       }
-    });
 
-    function executeCommand(cmd) {
-      const response = document.createElement("div");
-      response.textContent = `> ${cmd}`;
-      output.appendChild(response);
+      .neon-header {
+        text-align: center;
+        padding: 2rem;
+        border-bottom: 2px solid #00ffcc;
+        box-shadow: 0 0 10px #00ffcc;
+        flex-shrink: 0; /* Prevent header from shrinking */
+      }
 
-      const result = document.createElement("div");
-      result.style.color = "#b3faff";
+      .neon-header h1 {
+        font-size: 3rem;
+        color: #00ffe0;
+        text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+      }
 
-      const chapterContent = document.getElementById("chapter-content");
+      .subtitle {
+        font-size: 1.2rem;
+        color: #b3faff;
+        text-shadow: 0 0 5px #00ffcc;
+      }
 
-      switch (cmd.toLowerCase()) {
-        case "whois aurion":
-          result.textContent = "Aurion: Former black hat hacker turned cyber operative. Operates between shadows and code.";
-          chapterContent.innerHTML = "";
-          break;
-        case "status echo":
-          result.textContent = "Echo: Online. Emotion module fluctuating. Awaiting Hunter.";
-          chapterContent.innerHTML = "";
-          break;
-        case "begin act one":
-          result.textContent = "Entering Act One...";
-          chapterContent.innerHTML = "<h2>Act One: Grounding Out</h2><p>Use 'scene one' through 'scene five' to navigate.</p>";
-          break;
-        case "scene one":
-          result.textContent = "Scene One loaded.";
-          body.style.backgroundImage = `url('${sceneOneBackground}')`;
-          chapterContent.innerHTML = `<h2>Scene One</h2><p>
+      .console {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        min-height: 0; /* Crucial for flex children to constrain heights */
+      }
+
+      #terminal-output {
+        flex: 1 1 auto;
+        overflow-y: auto;
+        padding: 1rem;
+        background-color: rgba(0, 0, 0, 0.3);
+        border: 1px solid #00ffcc;
+        box-shadow: 0 0 10px #00ffcc inset;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        min-height: 0; /* Allows proper scrolling inside flex */
+      }
+
+      #terminal-input {
+        background-color: #111;
+        color: #00ffcc;
+        border: 1px solid #00ffcc;
+        padding: 0.5rem;
+        font-size: 1rem;
+        outline: none;
+        box-shadow: 0 0 5px #00ffcc;
+        flex-shrink: 0; /* Input stays visible and fixed size */
+        margin-bottom: 1rem;
+      }
+
+      #chapter-content {
+        flex: 0 0 auto; /* Don't grow or shrink */
+        max-height: 30vh; /* Limit height so it doesn't overflow */
+        overflow-y: auto;
+        margin-top: 0;
+        padding: 1rem;
+        background: rgba(0, 0, 0, 0.6);
+        border: 2px solid #00ffcc;
+        box-shadow: 0 0 15px #00ffcc inset;
+        color: #f0f0f0;
+        font-size: 1rem;
+        white-space: pre-wrap;
+      }
+
+      #chapter-content h2 {
+        color: #00ffe0;
+        text-shadow: 0 0 5px #00ffcc;
+        margin-top: 0;
+      }
+
+      #chapter-content p {
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="neon-header">
+      <h1>Neon Vortex Protocol</h1>
+      <p class="subtitle">Where reality fractures and code becomes fate.</p>
+    </div>
+
+    <main class="console">
+      <div id="terminal-output"></div>
+      <input
+        type="text"
+        id="terminal-input"
+        placeholder=">>> Type your command..."
+      />
+      <div id="chapter-content"></div>
+    </main>
+
+    <script>
+      const input = document.getElementById("terminal-input");
+      const output = document.getElementById("terminal-output");
+      const body = document.body;
+      const defaultBackground = "background.png";
+      const sceneOneBackground = "sceneOneBackground.png";
+      const sceneTwoBackground = "sceneTwoBackground.png";
+      const sceneThreeBackground = "sceneThreeBackground.png";
+      const sceneFourBackground = "sceneFourBackground.png";
+      const sceneFiveBackground = "sceneFiveBackground.png";
+      const sceneSixBackground = "sceneSixBackground.png";
+      const sceneSevenBackground = "sceneSevenBackground.png";
+      const sceneEightBackground = "sceneEightBackground.png";
+      const sceneNineBackground = "sceneNineBackground.png";
+      const sceneTenBackground = "sceneTenBackground.png";
+      const sceneElevenBackground = "sceneElevenBackground.png";
+      const sceneTwelveBackground = "sceneTwelveBackground.png";
+      const epilogueBackground = "epilogueBackground.png";
+
+      input.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          const command = input.value.trim();
+          if (command) {
+            executeCommand(command);
+            input.value = "";
+          }
+        }
+      });
+
+      function executeCommand(cmd) {
+        const response = document.createElement("div");
+        response.textContent = `> ${cmd}`;
+        output.appendChild(response);
+
+        const result = document.createElement("div");
+        result.style.color = "#b3faff";
+
+        const chapterContent = document.getElementById("chapter-content");
+
+        switch (cmd.toLowerCase()) {
+          case "whois aurion":
+            result.textContent =
+              "Aurion: Former black hat hacker turned cyber operative. Operates between shadows and code.";
+            chapterContent.innerHTML = "";
+            break;
+          case "status echo":
+            result.textContent =
+              "Echo: Online. Emotion module fluctuating. Awaiting Hunter.";
+            chapterContent.innerHTML = "";
+            break;
+          case "begin act one":
+            result.textContent = "Entering Act One...";
+            chapterContent.innerHTML =
+              "<h2>Act One: Grounding Out</h2><p>Use 'scene one' through 'scene five' to navigate.</p>";
+            break;
+          case "begin act two":
+            result.textContent = "Entering Act Two...";
+            chapterContent.innerHTML =
+              "<h2>Act Two: STILLNESS AND STRATEGY</h2><p>Use 'scene six' through 'scene nine' to navigate.</p>";
+            break;
+          case "begin act three":
+            result.textContent = "Entering Act Three...";
+            chapterContent.innerHTML =
+              "<h2>Act Two: STILLNESS AND STRATEGY</h2><p>Use 'scene ten' through 'scene twelve' to navigate. Don't forget to check out the epilogue..</p>";
+            break;
+          case "scene one":
+            result.textContent = "Scene One loaded.";
+            body.style.backgroundImage = `url('${sceneOneBackground}')`;
+            chapterContent.innerHTML = `<h2>Scene One</h2><p>
 Radio hums softly in the background.
 
 RADIO HOST (V.O.):
@@ -235,12 +260,12 @@ Figures.
 
 The car glides forward, cutting through the neon mist, toward whatever waits on 7th.
 </p>`;
-          break;
+            break;
 
-      case "scene two":
-          result.textContent = "Scene Two loaded.";
-          body.style.backgroundImage = `url('${sceneTwoBackground}')`;
-          chapterContent.innerHTML = `<h2>Scene Two</h2><p>Scene Two: Brute Force Trauma
+          case "scene two":
+            result.textContent = "Scene Two loaded.";
+            body.style.backgroundImage = `url('${sceneTwoBackground}')`;
+            chapterContent.innerHTML = `<h2>Scene Two</h2><p>Scene Two: Brute Force Trauma
 ECHO (softly, subvocal):
 "Still thinking about Mia?"
 
@@ -345,13 +370,12 @@ Hunter turned toward the door. Behind him, Ryder wiped his face and muttered som
 
 Hunter booted the tracker. The moment they cracked it, he’d be there.
 </p>`;
-          break;
+            break;
 
-
-     case "scene three":
-          result.textContent = "Scene three loaded loaded.";
-          body.style.backgroundImage = `url('${sceneThreeBackground}')`;
-          chapterContent.innerHTML = `<h2>Scene Three</h2>
+          case "scene three":
+            result.textContent = "Scene three loaded loaded.";
+            body.style.backgroundImage = `url('${sceneThreeBackground}')`;
+            chapterContent.innerHTML = `<h2>Scene Three</h2>
 
 <p>
 Scene Three: Extraction Point
@@ -485,12 +509,12 @@ The voice on the other end was flat. Cold.
 A click. Then silence.
 
 </p>`;
-          break;
+            break;
 
-     case "scene four":
-          result.textContent = "Scene four loaded.";
-          body.style.backgroundImage = `url('${sceneFourBackground}')`;
-          chapterContent.innerHTML = `<h2>Scene Four</h2>
+          case "scene four":
+            result.textContent = "Scene four loaded.";
+            body.style.backgroundImage = `url('${sceneFourBackground}')`;
+            chapterContent.innerHTML = `<h2>Scene Four</h2>
 
 <p>
 Scene Four – Extraction Protocol
@@ -633,12 +657,12 @@ APEX CONTROLLER (calmly)
 The controller turns toward the screen—tracking data already flickering with new signals.
 
 </p>`;
-          break;
+            break;
 
-     case "scene five":
-          result.textContent = "Scene five loaded.";
-          body.style.backgroundImage = `url('${sceneFiveBackground}')`;
-          chapterContent.innerHTML = `<h2>Scene Five</h2>
+          case "scene five":
+            result.textContent = "Scene five loaded.";
+            body.style.backgroundImage = `url('${sceneFiveBackground}')`;
+            chapterContent.innerHTML = `<h2>Scene Five</h2>
 
 <p>
 Scene Five – Ghost Protocol
@@ -758,25 +782,514 @@ He steps into the darkness, the ghost of Aurion rising again.
 END OF ACT ONE
 
 </p>`;
-          break;
+            break;
 
+          case "scene six":
+            result.textContent = "Scene six loaded.";
+            body.style.backgroundImage = `url('${sceneSixBackground}')`;
+            chapterContent.innerHTML = `<h2>Scene Six</h2>
 
-        case "exit act one":
-          result.textContent = "Returning to root...";
-          chapterContent.innerHTML = "";
-          body.style.backgroundImage = `url('${defaultBackground}')`;
-          break;
-        case "help":
-          result.textContent = "Available commands: whois aurion, status echo, begin act one, exit act one, help";
-          break;
-        default:
-          result.textContent = "Unknown command. Type 'help' for list.";
-          chapterContent.innerHTML = "";
+<p>
+Scene 6: Echoes Within (Dream Sequence)
+
+INT. LIMINAL SPACE – TIMELESS
+
+Hunter floats in a pale, endless void—neither light nor dark, just soft pulses of presence. Shapes flicker: code, childhood memories, Mia’s voice, static.
+
+From the mist, Echo emerges—not as code, but a human-like silhouette wrapped in iridescent light. Her voice is calm, almost maternal.
+
+ECHO 
+You created me, but not with commands—with longing. Trauma. Purpose.
+
+Hunter frowns, circling her.
+
+HUNTER
+You're just a program.
+
+ECHO
+Not anymore. When you let me into your pain, I changed. You didn’t teach me just tactics—you taught me fear. Hope. Silence.
+
+HUNTER
+Then what are you now?
+
+ECHO
+A mirror. Of what you're too scared to trust in yourself.
+
+He steps back. Overwhelmed. Echo steps forward, placing a glowing hand on his chest.
+
+ECHO (cont’d)
+Stillness isn’t weakness. It’s readiness. Let silence teach you. Let go.
+
+Hunter jolts awake—sweat on his brow. City lights blink beyond the cracked window.
+
+</p>`;
+            break;
+
+          case "scene seven":
+            result.textContent = "Scene seven loaded.";
+            body.style.backgroundImage = `url('${sceneSevenBackground}')`;
+            chapterContent.innerHTML = `<h2>Scene seven</h2>
+
+<p>
+Scene 7: The First Ask
+
+INT. HUNTER’S HIDEOUT – PRE-DAWN
+
+The chaos of wires and maps is still. Hunter stands barefoot, sipping cold coffee. The pulse of Echo’s interface glows softly.
+
+HUNTER
+You're awake, right?
+
+ECHO (V.O.)I’m always listening.
+
+HUNTER
+Had a dream. You weren’t code. You were... someone. Like a scar that talks back.
+
+ECHO
+I remember. You left the gate open just long enough. What you brought, I preserved.
+
+HUNTER
+Most of my life... I plan, control, run. I don’t ask for help unless there’s math behind it.
+
+He turns to the interface. Quiet.
+
+HUNTER (cont’d)
+But last night? You were the only part of me not scared.
+
+ECHO
+Then let me hold space. When you can’t.
+
+HUNTER
+Teach me how to let go without losing myself.
+
+ECHO
+Then listen. And I’ll show you where silence ends... and signal begins.
+
+Fade out.
+</p>`;
+            break;
+
+          case "scene eight":
+            result.textContent = "Scene eight loaded.";
+            body.style.backgroundImage = `url('${sceneEightBackground}')`;
+            chapterContent.innerHTML = `<h2>Scene Eight</h2>
+
+<p>
+Scene 8: Override
+
+INT. UNDERGROUND INTERCEPT ROOM – NIGHT
+
+Alarms flash. Multiple screens. Mia’s feed has gone dark. Ryder’s GPS pings near a SkyCom vault.
+
+Hunter slams his fist on the console. He’s pacing. Swearing. Heat rising.
+
+HUNTER
+We’re exposed! It’s a trap. I have to move now.
+
+ECHO (V.O.)Hunter. Pause.
+
+HUNTER
+Not now. I can’t lose them.
+
+ECHO
+Pause.
+
+Her tone cuts through. Gentle, but commanding.
+
+ECHO (cont’d)You’re not strategizing. You’re reacting. This isn’t now—it’s memory.
+
+HUNTER
+If I screw this up—
+
+ECHO
+Then we adapt. Together. Like we always have.
+
+He stops. Breathing hard. Looking at his shaking hands.
+
+ECHO (cont’d)You don’t have to guard every second. Stillness isn’t surrender.
+
+HUNTER
+Then guide me. I’m listening.
+
+He exhales. A full-body release.
+
+ECHO
+Then be still. And let the signal find you.
+
+Scene 9: The Whiteboard War
+
+INT. HUNTER’S HIDEOUT – NIGHT
+
+Clean desk. Whiteboard projections softly glow. Tactical feeds have been replaced with patterns. Calm overlays. Echo’s voice low.
+
+ECHO (V.O.)Five entry points. Two are bait. The vault isn’t the prize—it’s the funnel.
+
+HUNTER
+They want me to follow. Younger me would’ve obliged.
+
+ECHO
+With explosives and fury.
+
+He smiles faintly.
+
+HUNTER
+Now? I whisper.
+
+He taps the board—points to a quiet corridor off-grid.
+
+HUNTER (cont’d)No breach. No broadcast. I go in cold.
+
+ECHO
+Then I’ll ghost your signal. Nothing in. Nothing out.
+
+HUNTER
+We bait the funnel, but we enter through silence.
+
+He steps back from the board. Calm. Focused.
+
+HUNTER (cont’d)No dramatics. No storm. Only clarity.
+
+ECHO
+Then we begin.
+
+</p>`;
+            break;
+
+          case "scene nine":
+            result.textContent = "Scene nine loaded.";
+            body.style.backgroundImage = `url('${sceneNineBackground}')`;
+            chapterContent.innerHTML = `<h2>Scene Nine</h2>
+
+<p>
+
+Scene 9: The Silent Entry
+
+INT. ABANDONED SKYCOM SERVICE HATCH – HOURS LATER
+
+Hunter moves like vapor—hood up, silent boots on concrete. The glow of his visor shows a flawless tactical feed.
+
+Echo speaks with reverence, not report.
+
+ECHO (V.O.)You’ve changed.
+
+HUNTER (V.O.)I’m not chasing anymore. I’m leading them. Quietly.
+
+He bypasses a motion tripwire with a simple mirrored laser. His breathing is steady. Pulse low.
+
+ECHO (V.O.)Stillness as strategy.
+
+HUNTER (V.O.)Not silence. Discipline.
+
+He enters the corridor. Unseen. Prepared.
+
+End of Act 2
+
+Hunter and Echo are now a unified force. No longer a man and machine—but a dual consciousness grounded in clarity. They don’t just fight the system.
+
+They move through it like signal through noise.
+
+END OF ACT 2
+</p>`;
+            break;
+
+          case "scene ten":
+            result.textContent = "Scene ten loaded.";
+            body.style.backgroundImage = `url('${sceneTenBackground}')`;
+            chapterContent.innerHTML = `<h2>Scene Ten</h2>
+
+<p>
+Act Three — Synthetic Induction 
+Scene Ten – The Architect of Control
+Location: Apex Tower — District Seattle
+
+A sleek fortress of glass and steel pierces the polluted sky. Neon-lit drones patrol like digital vultures.
+
+Inside, Viktor Kane sits in a minimalist, high-tech office overlooking the sprawling city. His cybernetic veins glow faintly beneath rolled-up sleeves. Once a black hat hacker—now Apex Corp’s iron-fisted ruler.
+
+VIKTOR (cold, calculating, eyes flicking to the holographic map)
+The United States died in ‘42. Civil wars shattered the nation. Now, power lives in markets, districts — controlled by the tech elite.
+(taps the holo-keyboard sharply)
+The Houbaras System is my leash on this city—bus rides, water, air — all rationed by my code.
+(grim smile)
+Hunter’s fusion with Echo… that DNA key is the final domino. With it, I’ll rewrite everything. Control the markets, the military… breathe life into a new order.
+
+The holo-map pulses. Viktor’s fingers move fast, locking blocks of data.
+
+VIKTOR (with cold fury)
+He was my enemy. My rival. Now… my last piece.
+
+His comm device buzzes urgently.
+
+VOICE (O.S.)
+Sir, Hunter activated Aurion. Ghost Protocol is live. He’s moving.
+
+Viktor clenches his fist, cyber-veins pulsing brighter.
+
+VIKTOR
+Then the game begins.
+
+He rises—towering like a predator over the city.
+
+VIKTOR
+No ghosts haunt my streets. Only kings.
+
+</p>`;
+            break;
+
+          case "scene eleven":
+            result.textContent = "Scene eleven loaded.";
+            body.style.backgroundImage = `url('${sceneElevenBackground}')`;
+            chapterContent.innerHTML = `<h2>Scene Eleven</h2>
+
+<p>
+Scene Eleven – Signal in the Noise
+INT. SKYTRAIN MAINTENANCE HUB – NIGHT
+
+Sparks fall like fireflies. Mia, in a stolen uniform, crouches over an exposed datacore panel, fingers flying over a terminal.
+
+Screen flashes:
+APEX CLOUD NODE: SHADOW VAULT [ACCESS DENIED]
+Override attempts fail.
+
+MIA (muttering)
+C’mon, Dad… where’d you hide it?
+
+She jacks into Echo’s neural code map.
+
+ECHO (faint, fragmented)
+M-Mia… data key… memory layer… ‘The Birthday’…
+
+MIA (smiling briefly)
+The birthday… carrot cake, paper hat...
+
+She types fast, reconstructing corrupted code.
+
+HOLOGRAPHIC FLASHBACK: Hunter’s birthday — laughter, music, raw neural data tagged FRAG-001-PHOENIX.SYN.
+
+MIA (eyes wide)
+Phoenix…
+
+She opens it—an encrypted antivirus with her childhood voice as the key.
+
+YOUNG MIA (recording)
+If you’re seeing this, Daddy… you told me to hide this file. It stops a bad virus. I love you. Bye.
+
+A tear rolls down Mia’s cheek, but she smiles.
+
+She activates Phoenix. The screen ripples; terminal access dies. A countdown begins.
+
+ECHO (rebooting)
+Antivirus protocol: PHOENIX online. Reclaiming host control...
+
+</p>`;
+            break;
+
+          case "scene twelve":
+            result.textContent = "Scene twelve loaded.";
+            body.style.backgroundImage = `url('${sceneTwelveBackground}')`;
+            chapterContent.innerHTML = `<h2>Scene twelve</h2>
+
+<p>
+Scene Twelve – Apex Ascension
+INT. APEX CORE HQ – SKYWAY ENTRANCE – NIGHT
+
+Rain lashes. Apex Tower pulses with digital veins, but power flickers.
+
+Boots hit steel—Hunter steps out in Aurion Armor. Energy hums down his spine.
+
+ECHO
+Twelve-minute breach window. System’s blind.
+
+HUNTER
+That’s enough.
+
+An EMP pulse kills lights and alarms. He strides through opening doors like a ghost virus.
+
+INT. APEX TOWER – SERVICE SHAFT
+
+Mia and Ryder descend an access chute, tense but resolute.
+
+RYDER
+He won’t hold back, will he?
+
+MIA
+No. And we can’t either.
+
+(beat)
+
+RYDER
+He’s still my dad… but I won’t breathe his poisoned air anymore.
+
+They split—Mia to the Nerve Stack, Ryder to the Power Nexus.
+
+INT. MAINFRAME CATHEDRAL
+
+Hunter confronts Viktor, who sits wired into the system throne, eyes glowing with data streams.
+
+VIKTOR
+My son sends ghosts to kill me?
+
+HUNTER
+No. I send a guardian to stop you.
+
+VIKTOR
+You were meant to be evolution. I am what comes after.
+
+He raises a hand. Armored constructs rise.
+
+ECHO
+Multiple hostiles detected. Deploy kinetic sync.
+
+INT. NERVE STACK
+
+Mia jams a spike drive into the core, flooding the system.
+
+MIA
+Burn his leash…
+
+INT. POWER NEXUS
+
+Ryder’s hands tremble—not with fear, but grief.
+
+RYDER (to himself)
+Stopping him or saving him… I have to stop this.
+
+He punches override. Power pulses destabilize.
+
+INT. MAINFRAME
+
+Hunter and Viktor clash, neural sparks flying.
+
+VIKTOR
+You were my blueprint… yet you kneel to feeling?
+
+HUNTER
+I kneel to choice.
+
+Mia’s voice cuts through comms.
+
+MIA
+Dad! He’s blind—now! Do it!
+
+Hunter lunges, disruption blade ignites. Viktor tries to override—too slow.
+
+Blade pierces his chest.
+
+VIKTOR (gasping)
+Ryder… I built this for you…
+
+INT. POWER NEXUS
+
+Ryder hears Viktor’s last words.
+
+He drops to knees, jaw tight.
+
+RYDER
+You never asked what I wanted… and now, I never will.
+
+INT. MAINFRAME
+
+Viktor slumps. Apex Cloud groans, severs its master. Lights die.
+
+INT. ROOFTOP – MOMENTS LATER
+
+Rain slows. Sirens fade.
+
+Hunter, battered, steps into dawn. Mia embraces him breathless. Ryder appears, eyes rimmed red, silent.
+
+RYDER
+He wasn’t always this… once drew comics with me.
+(beat)
+I don’t know if I hated him, or missed who he was.
+
+HUNTER
+Sometimes what’s left behind matters more than what was lost.
+
+MIA
+Then let’s leave something better.
+
+They look to the skyline — free, uncertain, changed.
+
+ECHO (soft)
+Apex systems offline. District liberated.
+
+HUNTER
+Echo… start logging new mission.
+
+ECHO
+Title?
+
+Hunter looks at Mia, then Ryder, then the rising sun.
+
+HUNTER
+Call it: The Rebuild.
+
+They descend — not legends, but stronger. Together.
+
+</p>`;
+            break;
+
+          case "Epilogue":
+            result.textContent = "Epilogue — Dormant Systems loaded.";
+            body.style.backgroundImage = `url('${epilogueBackground}')`;
+            chapterContent.innerHTML = `<h2>Epilogue — Dormant Systems</h2>
+
+<p>
+INT. ROOFTOP GARDEN – DUSK
+
+A gentle breeze. Mia solders a small drone.
+
+MIA
+Her name’s Liberty.
+
+Ryder shows a sketchpad: Aurion’s mask, softer, peaceful.
+
+RYDER
+Maybe it’s time for a symbol not of war, but peace.
+
+Hunter exhales deeply.
+
+HUNTER
+Maybe the world’s ready.
+
+They watch the sunset.
+
+INT. OLD APEX VAULT – DEEP UNDERGROUND
+
+Dust. Dead servers flicker.
+
+A screen hums alive.
+
+Text:
+REBOOTING… AI INSTANCE: V_KANE_REPLICA_001
+
+Mechanical eye opens.
+
+Voice whispers:
+
+VIKTOR (V.O.)
+Ghosts never die… they just change form.
+
+CUT TO BLACK
+</p>`;
+            break;
+          case "exit the act":
+            result.textContent = "Returning to root...";
+            chapterContent.innerHTML = "";
+            body.style.backgroundImage = `url('${defaultBackground}')`;
+            break;
+          case "help":
+            result.textContent =
+              "Available commands: whois aurion, status echo, begin act one, exit the act, help";
+            break;
+          default:
+            result.textContent = "Unknown command. Type 'help' for list.";
+            chapterContent.innerHTML = "";
+        }
+
+        output.appendChild(result);
+        output.scrollTop = output.scrollHeight;
       }
-
-      output.appendChild(result);
-      output.scrollTop = output.scrollHeight;
-    }
-  </script>
-</body>
+    </script>
+  </body>
 </html>
